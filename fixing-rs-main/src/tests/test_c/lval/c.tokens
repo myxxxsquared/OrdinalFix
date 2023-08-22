@@ -1,0 +1,10 @@
+LT	int	int
+ST	IDENTIFIER	x
+LT	,	,
+ST	IDENTIFIER	i
+LT	;	;
+LT	~	~
+ST	IDENTIFIER	x
+LT	=	=
+ST	IDENTIFIER	i
+LT	;	;

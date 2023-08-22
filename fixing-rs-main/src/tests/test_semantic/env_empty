@@ -1,0 +1,16 @@
+
+
+class CLASS_684 extends Object {
+    CLASS_684 FIELD_572;
+    CLASS_684 (Object VAR_671) {super();}
+    void METHOD_416 (CLASS_684 VAR_672) {}
+}
+class CLASS_685 extends CLASS_684 {
+CLASS_685() {super();}
+}
+
+class CLSFIX extends Object
+{
+CLSFIX() {super();}
+void METHODFIX() {}
+}

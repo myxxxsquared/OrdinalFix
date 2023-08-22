@@ -1,0 +1,9 @@
+/target
+/.history
+/fixing-rs-base/target
+/fixing-rs-macros/target
+output.csv
+mj-results.csv
+__pycache__
+*.pyc
+/dataset

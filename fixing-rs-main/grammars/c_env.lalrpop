@@ -1,0 +1,59 @@
+
+use crate::c::cenv::ast::{CEnvAstItem,CEnvAstType,CEnvAstTypeBase,CEnvAstTypeExtra,CEnvAstParam};
+
+grammar;
+
+pub File: Vec<CEnvAstItem<'input>> = <r:Entity*> => r;
+Entity: CEnvAstItem<'input> = {
+    "=FN" <name:Id> ":" <ty:Type> "-" <r:ParamList> ";" => CEnvAstItem::FuncDecl(name, ty, r),
+    "=VAR" <name:Id> ":" <ty:Type> ";" => CEnvAstItem::VarDecl(name, ty),
+};
+ParamList: Vec<CEnvAstParam<'input>> = {
+    => Vec::new(),
+    <l:ParamListNonEmpty> => l,
+};
+ParamListNonEmpty: Vec<CEnvAstParam<'input>> = {
+    <l:ParamListNonEmpty> "," <r:Param> => {let mut l = l; l.push(r); l},
+    Param => vec![<>],
+};
+Param: CEnvAstParam<'input> = {
+    ":" <t:Type> => CEnvAstParam::WithoutName(t),
+    <name:Id> ":" <t:Type> => CEnvAstParam::WithName(name, t),
+    "..." => CEnvAstParam::VaArgs,
+};
+Type: CEnvAstType = <base:TypeBase> <extra:TypeExtra*> => CEnvAstType { <> };
+TypeBase: CEnvAstTypeBase = {
+    "void" => CEnvAstTypeBase::Void,
+    "int" => CEnvAstTypeBase::Int,
+    "float" => CEnvAstTypeBase::Float,
+};
+TypeExtra: CEnvAstTypeExtra = {
+    "." "const" => CEnvAstTypeExtra::Const,
+    "." "*" => CEnvAstTypeExtra::Pointer,
+    "." "[" "]" => CEnvAstTypeExtra::Array,
+};
+
+
+match {
+    r"\s*" => { },
+    r"//[^\n\r]*[\n\r]*" => { },
+    r"/\*[^*]*\*+(?:[^/*][^*]*\*+)*/" => { },
+
+    "void",
+    "int",
+    "float",
+    "const",
+    ",",
+    ".",
+    "[",
+    "]",
+    "*",
+    "-",
+    ":",
+    ";",
+    "...",
+    "=FN",
+    "=VAR",
+} else {
+    r"[a-zA-Z0-9_]*" => Id
+}

@@ -1,0 +1,38 @@
+
+use crate::mj::tokenizer::MJToken;
+
+grammar;
+
+pub File: Vec<MJToken<'input>> = Token* => <>;
+
+Token: MJToken<'input> = {
+    Punctuation => MJToken::LiteralTerminal(<>),
+    <w:Word> => {
+        match w {
+            "null" | "new" | "if" | "else" | "return" => MJToken::LiteralTerminal(w),
+            _ => MJToken::Identifier(w),
+        }
+    },
+};
+
+Punctuation: &'input str = {
+    r"\{" => <>,
+    r"\}" => <>,
+    r";" => <>,
+    r"\(" => <>,
+    r"\)" => <>,
+    r"=" => <>,
+    r"\." => <>,
+    r"," => <>,
+    r"==" => <>,
+};
+
+Word: &'input str = r"[a-zA-Z0-9_]*" => <>;
+
+match {
+    r"\s*" => { },
+    r"//[^\n\r]*[\n\r]*" => { },
+    r"/\*[^*]*\*+(?:[^/*][^*]*\*+)*/" => { },
+    _
+}
+

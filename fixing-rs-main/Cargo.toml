@@ -1,0 +1,30 @@
+[package]
+name = "fixing-rs-main"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+fixing-rs-macros = { path = "../fixing-rs-macros" }
+fixing-rs-base = { path = "../fixing-rs-base" }
+
+typed-arena = "*"
+lalrpop-util = "*" 
+priority-queue = "*"
+getset = "*"
+log = "*"
+
+clap = { version = "4.3.3", features = ["derive"] }
+csv = "1.2.2"
+rlimit = "0.9.1"
+clang-sys = { version = "1.6.1", optional = true }
+env_logger = "0.10.0"
+ctor = "0.2.2"
+backtrace = "0.3.67"
+
+[build-dependencies]
+lalrpop = "*"
+rustc_version = "0.4.0"
+
+[features]
+clang_tokenizer = ["dep:clang-sys"]
+trace_memory = []

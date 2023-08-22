@@ -1,0 +1,11 @@
+LT	int	int
+LT	*	*
+ST	IDENTIFIER	c
+LT	=	=
+ST	LITERAL_INT	1
+LT	,	,
+ST	IDENTIFIER	c
+LT	[	[
+ST	LITERAL_INT	9999
+LT	]	]
+LT	;	;

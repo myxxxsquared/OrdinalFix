@@ -1,0 +1,17 @@
+
+=FN myfunc1:void-
+:int.*,
+:float,
+:int.*,
+:float;
+
+
+=FN myfunc2:void-
+:float,
+:int.*,
+:float,
+:int.*;
+
+
+=FN main:int-
+;

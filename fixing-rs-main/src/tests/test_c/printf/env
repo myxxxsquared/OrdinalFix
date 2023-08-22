@@ -1,0 +1,32 @@
+
+=FN printf:int-
+format:int.const.*,
+...;
+
+=FN scanf:int-
+format:int.const.*,
+...;
+
+=FN malloc:void.*-
+size:int;
+
+=FN calloc:void.*-
+num:int,
+size:int;
+
+=FN free:void-
+ptr:void.*;
+
+=FN abs:int-
+x:int;
+
+=FN exit:void-
+status:int;
+
+=VAR sum:int;
+
+=VAR i:int;
+
+=FN catalan:int-
+n:int;
+

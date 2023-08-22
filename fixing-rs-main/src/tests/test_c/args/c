@@ -1,0 +1,6 @@
+int *x;
+float y;
+myfunc1(x, y, x, y);
+myfunc2(y, x, y, x);
+myfunc1(x, x, x, x);
+myfunc2(y, y, y, y);

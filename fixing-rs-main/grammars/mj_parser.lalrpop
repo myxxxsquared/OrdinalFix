@@ -1,0 +1,51 @@
+
+use super::{MJAstCls,MJAstFieldDecl,MJAstMethodDecl,MJAstConDecl};
+use std::iter::once;
+
+grammar;
+
+pub CompilationUnit: Vec<MJAstCls<'input>>
+    = <cls:ClsDef*> => cls;
+ClsDef: MJAstCls<'input>
+    = "class" <name:Id> "extends" <inh:Id> "{" <fields:FieldDecl*> <constructor:ConDecl> <methods:MethodDecl*> "}" => MJAstCls { <> };
+FieldDecl: MJAstFieldDecl<'input>
+    = <ty:Id> <name:Id> ";" => MJAstFieldDecl { <> };
+ConDecl: MJAstConDecl<'input>
+    = <name:Id> "(" <params:ArgumentList> ")" "{" MethodContent* "}" => MJAstConDecl { <> };
+MethodDecl: MJAstMethodDecl<'input>
+    = <ret_ty:MethodType> <name:Id> "(" <params:ArgumentList> ")" "{" MethodContent* "}" => MJAstMethodDecl { <> };
+MethodType: Option<&'input str> = {
+        Id => Some(<>),
+        "void" => None,
+    };
+ArgumentList: Vec<&'input str> = {
+    <a0:(<ArgumentDecl> ",")*> <a1:ArgumentDecl> => a0.into_iter().chain(once(a1)).collect(),
+    => Vec::new(),
+};
+ArgumentDecl: &'input str
+    = <ty:Id> Id => ty;
+MethodContent: () = {
+    "(" => (),
+    ")" => (),
+    ";" => (),
+    Id => (),
+};
+
+
+match {
+    r"\s*" => { },
+    r"//[^\n\r]*[\n\r]*" => { },
+    r"/\*[^*]*\*+(?:[^/*][^*]*\*+)*/" => { },
+
+    "class",
+    "extends",
+    "void",
+    "{",
+    "}",
+    "(",
+    ")",
+    ";",
+    ",",
+} else {
+    r"[a-zA-Z0-9_]*" => Id
+}

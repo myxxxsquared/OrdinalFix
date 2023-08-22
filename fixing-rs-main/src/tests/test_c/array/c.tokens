@@ -1,0 +1,6 @@
+LT	int	int
+LT	*	*
+ST	IDENTIFIER	array
+LT	[	[
+LT	]	]
+LT	;	;

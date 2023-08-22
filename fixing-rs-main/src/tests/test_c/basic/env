@@ -1,0 +1,11 @@
+=FN printf:int-
+format:int.const.*,
+...;
+
+=FN scanf:int-
+format:int.const.*,
+...;
+
+=FN main:int-
+;
+

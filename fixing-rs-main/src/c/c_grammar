@@ -1,0 +1,209 @@
+
+exprsuffix [] [CSymTab<'a>] [CExprSuffixType] [CSymTabEntity] [CExprSuffixTypeEntity]
+    : 0 '++'
+    | 1 '--'
+    | 2 '[' expr ']'
+    ;
+
+exprprefix [] [CSymTab<'a>] [] [CSymTabEntity] []
+    : 0 '++'
+    | 1 '--'
+    ;
+
+exprprefixCast [] [CSymTab<'a>] [CExprPrefixType] [CSymTabEntity] [CExprPrefixTypeEntity]
+    : 2 '+'
+    | 3 '-'
+    | 4 '!'
+    | 5 '~'
+    | 7 '*'
+    | 8 '&'
+    ;
+
+exprbinop [OperatorPrecedence] [CSymTab<'a>] [CBinOpType] [CSymTabEntity] [CBinOpTypeEntity]
+    :  0 '*'
+    |  1 '/'
+    |  2 '%'
+    |  3 '+'
+    |  4 '-'
+    |  5 '<<'
+    |  6 '>>'
+    |  7 '<'
+    |  8 '<='
+    |  9 '>'
+    | 10 '>='
+    | 11 '=='
+    | 12 '!='
+    | 13 '&'
+    | 14 '^'
+    | 15 '|'
+    | 16 '&&'
+    | 17 '||'
+    | 18 '='
+    | 19 '+='
+    | 20 '-='
+    | 21 '*='
+    | 22 '/='
+    | 23 '%='
+    | 24 '<<='
+    | 25 '>>='
+    | 26 '&='
+    | 27 '^='
+    | 28 '|='
+    | 29 ','
+    ;
+
+expr [OperatorPrecedence] [CSymTab<'a>] [CExprInfo<'a>] [CSymTabEntity] [CExprInfoEntity]
+    : 0 IDENTIFIER
+    | 1 literal
+    | 2 expr exprsuffix
+    | 3 exprprefix expr
+    | 4 expr exprbinop expr
+    | 5 expr '?' expr ':' expr
+    | 6 '(' expr ')'
+    | 7 IDENTIFIER '(' args ')'
+    | 8 '(' typeExpr ')' expr
+    | 9 'sizeof' expr
+    | 10 'sizeof' '(' typeExpr ')'
+    | 11 exprprefixCast expr
+    ;
+
+args [] [CArgs<'a>] [] [CSymTabEntity] [CArgsEntity]
+    : 0
+    | 1 argsOther
+    ;
+
+argsOther [] [CArgs<'a>] [] [CSymTabEntity] [CArgsEntity]
+    : 0 expr
+    | 1 expr ',' argsOther
+    ;
+
+literal [] [CSymTab<'a>] [CExprInfo<'a>] [CSymTabEntity] [CExprInfoEntity]
+    : 0 LITERAL_INT
+    | 1 LITERAL_FLOAT
+    | 2 LITERAL_STRING
+    ;
+
+stmtOrDecl [] [CSymTab<'a>] [CSymTab<'a>] [CSymTabEntity] [CSymTabEntity]
+    : 0 decl
+    | 1 stmt
+    ;
+
+stmt [StatementInfo] [CSymTab<'a>] [] [CSymTabEntity] []
+    : 0 '{' stmtList '}'
+    | 1 expr ';'
+    | 2 'if' '(' expr ')' stmt
+    | 3 'if' '(' expr ')' stmt 'else' stmt
+    | 4 'break' ';'
+    | 5 'continue' ';'
+    | 6 'do' stmt 'while' '(' expr ')' ';'
+    | 7 'while' '(' expr ')' stmt
+    | 8 'for' '(' for1 for2 ';' for3 ')' stmt
+    | 9 'switch' '(' expr ')' '{' switchBlock '}'
+    | 12 'return' ';'
+    | 13 'return' expr ';'
+    ;
+
+switchBlock [] [CSymTab<'a>] [] [CSymTabEntity] []
+    : 0
+    | 1 switchBlockContent switchBlock
+    ;
+
+switchBlockContent [] [CSymTab<'a>] [CSymTab<'a>] [CSymTabEntity] [CSymTabEntity]
+    : 0 'case' LITERAL_INT ':'
+    | 1 'default' ':'
+    | 2 decl
+    | 3 stmt
+    ;
+
+stmtList [] [CSymTab<'a>] [] [CSymTabEntity] []
+    : 0
+    | 1 stmtOrDecl stmtList
+    ;
+
+
+decl [] [CSymTab<'a>] [CSymTab<'a>] [CSymTabEntity] [CSymTabEntity]
+    : 0 type declList ';'
+    ;
+
+declList [] [CDeclInh<'a>] [CSymTab<'a>] [CDeclInhEntity] [CSymTabEntity]
+    : 0 declOp
+    | 1 declOp ',' declList 
+    ;
+
+declOp [] [CDeclInh<'a>] [CSymTab<'a>] [CDeclInhEntity] [CSymTabEntity]
+    : 0 declId
+    | 1 declId '=' initializer
+    ;
+
+initializer [] [CDeclInh<'a>] [] [CDeclInhEntity] []
+    : 0 expr
+    | 1 '{'  '}'
+    | 2 '{' initializerList '}'
+    ;
+
+initializerList [] [CDeclInh<'a>] [] [CDeclInhEntity] []
+    : 0 initializer
+    | 1 initializerList ',' initializerList
+    ;
+
+declId [OperatorPrecedence] [CDeclInh<'a>] [CDeclIdSyn<'a>] [CDeclInhEntity] [CDeclSynEntity]
+    : 0 IDENTIFIER
+    | 1 '*' declId
+    | 3 '*' 'const' declId
+    | 2 declId '[' LITERAL_INT ']'
+    | 4 declId '[' ']'
+    | 5 '(' declId ')'
+    ;
+
+for1 [] [CSymTab<'a>] [CSymTab<'a>] [CSymTabEntity] [CSymTabEntity]
+    : 0 ';'
+    | 1 decl
+    | 2 expr ';'
+    ;
+
+for2 [] [CSymTab<'a>] [] [CSymTabEntity] []
+    : 0
+    | 1 expr
+    ;
+
+for3 [] [CSymTab<'a>] [] [CSymTabEntity] []
+    : 0
+    | 1 expr
+    ;
+
+typeBasic [] [CSymTab<'a>] [CTypeToken] [CSymTabEntity] [CTypeTokenEntity]
+    : 0 'signed'
+    | 1 'unsigned'
+    | 2 'char'
+    | 3 'short'
+    | 4 'int'
+    | 5 'long'
+    | 6 'float'
+    | 7 'double'
+    | 8 'const'
+    | 9 'void'
+    ;
+
+type [] [CSymTab<'a>] [CTypeComposed] [CSymTabEntity] [CTypeComposedEntity]
+    : 0 typeBasic
+    | 1 typeBasic type
+    ;
+
+typeExpr [] [CSymTab<'a>] [CTypeRef<'a>] [CSymTabEntity] [CTypeEntity]
+    : 0 type
+    | 1 typeExpr '*'
+    | 2 typeExpr '*' 'const'
+    ;
+
+functionBody @ [] [] [] [] []
+    : 0 stmtList
+    ;
+
+#
+IDENTIFIER
+LITERAL_INT
+#
+IDENTIFIER [] [CIdSelector<'a>] [CIdSelected<'a>] [CSymTabEntity] [CIdentifierEntity]
+LITERAL_INT [] [CSymTab<'a>] [] [CSymTabEntity] []
+LITERAL_FLOAT [] [CSymTab<'a>] [] [CSymTabEntity] []
+LITERAL_STRING [] [CSymTab<'a>] [] [CSymTabEntity] []

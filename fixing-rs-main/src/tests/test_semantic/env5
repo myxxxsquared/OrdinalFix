@@ -1,0 +1,50 @@
+class CLASS_243 extends CLASS_963 {
+
+    CLASS_243 (CLASS_469 VAR_634, CLASS_469 VAR_135, CLASS_959 VAR_127, CLASS_959 VAR_501) {super();}
+
+    CLASS_400 METHOD_417 () {return null;}
+}
+
+class CLASS_400 extends Object {
+    CLASS_959 FIELD_137;
+    CLASS_469 FIELD_980;
+
+    CLASS_400 () {super();}
+
+    void METHOD_215 (CLASS_469 VAR_124, Object VAR_619) {}
+    CLASS_959 METHOD_355 (CLASS_400 VAR_621) {return null;}
+}
+
+class CLASS_469 extends Object {
+    CLASS_959 FIELD_083;
+    CLASS_963 FIELD_333;
+
+    CLASS_469 () {super();}
+
+    CLASS_243 METHOD_232 (CLASS_959 VAR_401, CLASS_243 VAR_913) {return null;}
+    CLASS_243 METHOD_390 (CLASS_243 VAR_629) {return null;}
+}
+
+class CLASS_959 extends CLASS_400 {
+    CLASS_959 FIELD_592;
+    CLASS_243 FIELD_939;
+
+    CLASS_959 () {super();}
+
+    CLASS_400 METHOD_094 (CLASS_959 VAR_900) {return null;}
+    CLASS_963 METHOD_141 () {return null;}
+    void METHOD_964 () {}
+}
+
+class CLASS_963 extends CLASS_400 {
+    Object FIELD_028;
+    Object FIELD_208;
+
+    CLASS_963 () {super();}
+
+    void METHOD_016 (CLASS_959 VAR_747) {}
+}class CLSFIX extends Object
+{
+CLSFIX() {super();}
+void METHODFIX() {}
+}

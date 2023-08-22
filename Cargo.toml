@@ -1,0 +1,10 @@
+[workspace]
+
+members = [
+    "fixing-rs-main",
+    "fixing-rs-base",
+    "fixing-rs-macros",
+    "rust-typed-arena",
+]
+
+resolver = "2"

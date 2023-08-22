@@ -1,0 +1,3 @@
+int s1, s2, a, b, i, j, k, l;
+int b[500];
+int a[500];

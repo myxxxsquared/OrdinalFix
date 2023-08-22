@@ -1,0 +1,41 @@
+
+
+use std::str::FromStr;
+use crate::parsing::ast::{AlternativeNode, RulesNode, Element, GrammarFile, TerminalAnno};
+use crate::grammar::SymbolType;
+
+grammar;
+
+pub GrammarFile: GrammarFile<'input> = <rules:Rules*> "#" <multivalued_symbols:TokenRef*> <annos:Annos> => GrammarFile {<>};
+Annos: Vec<TerminalAnno<'input>> = {
+    => Vec::new(),
+    "#" <anno:Anno*> => anno,
+};
+Anno: TerminalAnno<'input> = <name:TokenRef> <types:TypeStr*> => TerminalAnno{ <> };
+Rules: RulesNode<'input> = <sym:RuleRef> <root_symbol:RootSymbol?> <types:TypeStr*> ":" <alternatives:AltList> ";" => RulesNode{<>};
+AltList: Vec<AlternativeNode<'input>> = {
+    <l:AltList> "|" <r:Alternative> => { let mut l = l; l.push(r); l },
+    Alternative => vec![<>],
+};
+
+Alternative: AlternativeNode<'input> = <id:Id> <elements:Element*> => AlternativeNode{<>};
+Element: Element<'input> = {
+    <r:TokenRef> => Element::new(SymbolType::SymbolicTerminal, r),
+    <r:StringLiteral> => Element::new(SymbolType::LiteralTerminal, r),
+    <r:RuleRef> => Element::new(SymbolType::NonTerminal, r),
+};
+
+RuleRef: &'input str = <s:r"[a-z][a-zA-Z_0-9]*"> => s;
+TokenRef: &'input str = <s:r"[A-Z][a-zA-Z_0-9]*"> => s;
+StringLiteral: &'input str = <s:r"'[^'\r\n]+'"> => &s[1..s.len()-1];
+Id: usize = <s:r"[0-9]+"> => usize::from_str(s).unwrap();
+TypeStr: &'input str = <s:r"\[[^\]]*\]"> => s;
+
+RootSymbol: () = <s:"@"> => { };
+
+match {
+    r"\s*" => { },
+    r"//[^\n\r]*[\n\r]*" => { },
+    r"/\*[^*]*\*+(?:[^/*][^*]*\*+)*/" => { },
+    _
+}

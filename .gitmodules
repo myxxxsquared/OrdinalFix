@@ -1,0 +1,6 @@
+[submodule "rust-typed-arena"]
+	path = rust-typed-arena
+	url = git@github.com:myxxxsquared/rust-typed-arena.git
+[submodule "c-processor/pycparser"]
+	path = c-processor/pycparser
+	url = git@github.com:eliben/pycparser.git

@@ -1,0 +1,51 @@
+class CLASS_491 extends CLASS_874 {
+    CLASS_515 FIELD_048;
+    CLASS_515 FIELD_842;
+    CLASS_515 FIELD_992;
+
+    CLASS_491 (CLASS_874 VAR_718, CLASS_648 VAR_477, Object VAR_299, CLASS_491 VAR_170) {super();}
+
+}
+
+class CLASS_515 extends Object {
+    Object FIELD_093;
+    CLASS_648 FIELD_956;
+
+    CLASS_515 () {super();}
+
+    Object METHOD_492 () {return null;}
+    void METHOD_535 (CLASS_943 VAR_032) {}
+}
+
+class CLASS_648 extends CLASS_874 {
+    CLASS_943 FIELD_125;
+    CLASS_874 FIELD_622;
+
+    CLASS_648 (Object VAR_841) {super();}
+
+    CLASS_648 METHOD_093 (CLASS_874 VAR_607) {return null;}
+    void METHOD_914 (CLASS_491 VAR_162, CLASS_515 VAR_244, CLASS_515 VAR_187) {}
+}
+
+class CLASS_874 extends Object {
+    CLASS_874 FIELD_616;
+    CLASS_515 FIELD_834;
+    CLASS_648 FIELD_868;
+
+    CLASS_874 () {super();}
+
+}
+
+class CLASS_943 extends CLASS_515 {
+    CLASS_943 FIELD_010;
+    CLASS_491 FIELD_367;
+
+    CLASS_943 (CLASS_515 VAR_000) {super();}
+
+    CLASS_648 METHOD_454 () {return null;}
+    void METHOD_757 () {}
+}class CLSFIX extends Object
+{
+CLSFIX() {super();}
+void METHODFIX() {}
+}

@@ -1,0 +1,21 @@
+=FN printf:int-
+format:int.const.*,
+...;
+
+=FN scanf:int-
+format:int.const.*,
+...;
+
+=FN count:int-
+:int,
+:int,
+:int;
+
+=FN main:int-
+;
+
+=FN count:int-
+a:int,
+b:int,
+n:int;
+
